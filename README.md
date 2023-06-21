@@ -26,7 +26,7 @@
 
 > "Hello-react-front-end" is a website in which it display random greeting by consuming an api endpoint from rails api app.
 
-# [Rails API](https://github.com/fithamlak/hello-rails-back-end)
+# [Rails API](https://github.com/fithamlak/rails-back-end-api)
 
 ## 🛠 Built With <a name="built-with"></a>
 
