@@ -1,26 +1,38 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const url = 'http://127.0.0.1:3000/api/greeting';
+const initialState = {
+  greeting: '',
+  isLoading: true,
+};
 
-export const fetchRandomGreeting = createAsyncThunk(
-  'greeting/fetchRandomGreeting',
+const url = 'http://localhost:3000/api/greeting';
+
+export const getRandomGreeting = createAsyncThunk(
+  'greetings/getRandomGreeting',
   async () => {
     const response = await axios.get(url);
-    return response.data.greeting;
+    console.log(response.data);
+    return response.data;
   },
 );
 
-const greetingSlice = createSlice({
+const greetingsSlice = createSlice({
   name: 'greeting',
-  initialState: { greeting: '' },
+  initialState,
   reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchRandomGreeting.fulfilled, (state, action) => {
-        state.greeting = action.payload;
-      });
+  extraReducers: {
+    [getRandomGreeting.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getRandomGreeting.fulfilled]: (state, action) => {
+      state.greeting = action.payload;
+      state.isLoading = false;
+    },
+    [getRandomGreeting.rejected]: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
-export default greetingSlice.reducer;
+export default greetingsSlice.reducer;
